@@ -63,6 +63,16 @@ namespace UCM.IAV.Navegacion
             return location;
         }
 
+        public int GetNumCols()
+        {
+            return numCols;
+        }
+
+        public int GetNumRows()
+        {
+            return numRows;
+        }
+
         private void LoadMap(string filename)
         {
             string path;
@@ -149,6 +159,7 @@ namespace UCM.IAV.Navegacion
         public override void Load()
         {
             LoadMap(mapName);
+            transform.GetChild(0).GetComponent<SceneCenterCamTarget>().UpdatePos(this);
         }
 
         protected void SetNeighbours(int x, int y, bool get8 = false)

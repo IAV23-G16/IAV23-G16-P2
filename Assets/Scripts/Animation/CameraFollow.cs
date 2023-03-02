@@ -8,11 +8,14 @@
 */
 using System.Collections;
 using System.Collections.Generic;
+using UCM.IAV.Navegacion;
 using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform target;
+    Transform target;
+    [SerializeField] Transform generalTargetTr;
+    [SerializeField] Transform characterTargetTr;
 
     public float smoothSpeed = 0.125f;
     float offset = 3.15f;
@@ -20,10 +23,30 @@ public class CameraFollow : MonoBehaviour
     private float zoom = 10f;
     private float zoomAmount = 40f;
 
+    private void Start()
+    {
+        target = characterTargetTr;
+    }
+
     void FixedUpdate()
     {
         if (target != null)
         {
+            //Alterna el objetivo de la cámara según input
+            if (Input.GetButtonDown("CameraToggle"))
+            {
+                if (target == characterTargetTr)
+                {
+                    target = generalTargetTr;
+                    zoom = 2f + Mathf.Max(generalTargetTr.parent.GetComponent<GraphGrid>().GetNumRows(), generalTargetTr.parent.GetComponent<GraphGrid>().GetNumCols()) * generalTargetTr.parent.GetComponent<GraphGrid>().cellSize;
+                }
+                else
+                {
+                    target = characterTargetTr;
+                    zoom = 10f;
+                }
+            }
+            
             Vector3 pos = target.position;
             Vector3 smoothPos = Vector3.Lerp(transform.position, pos, smoothSpeed);
 
