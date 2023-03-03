@@ -41,7 +41,16 @@ En esta escena se encuentran:
 
 Se incluyen los siguientes scripts/clases:
 
-- 
+- **Control Jugador**, que convierte el input de teclado en aceleración del avatar en la dirección pulsada.
+- **Llegada**, que acerca al gameobject a un objetivo, a mayor velocidad cuanto más lejos se encuentra. Incluye una función para realizar un raycast con rebote.
+- **Merodear**, que mueve el gameobject en línea recta, cambiando de dirección en intervalos aleatorios de tiempo.
+- **Mino Collision**, que reinicia la escena si el Minotauro colisiona con algo que no es Teseo.
+- **Mino Evader**, que resetea el camino de Teseo al colisionar con el Minotauro.
+- **Mino Manager**, que genera el número de Minotauros necesarios indicados por el Game Manager.
+- **Seguir Camino**, que dirige el gameobject hacia el próximo nodo en el grafo, a aceleración máxima.
+- **Slow**, que guarda la velocidad normal de Teseo para reducirla mientras se encuentre en el área del Minotauro.
+- **Teseo**, que activa y desactiva los efectos de Ariadna según el input del jugador.
+
 
 ## Diseño de la solución
 
