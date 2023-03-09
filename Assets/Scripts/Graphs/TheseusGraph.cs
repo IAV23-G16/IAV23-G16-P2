@@ -47,6 +47,7 @@ namespace UCM.IAV.Navegacion
 
         private bool ariadna;
 
+        Heur currentHeuristic = Heur.Euclidean;
 
         bool firstHeuristic = true;
         Camera mainCamera;
@@ -101,8 +102,7 @@ namespace UCM.IAV.Navegacion
                 switch (algorithm)
                 {
                     case TesterGraphAlgorithm.ASTAR:
-                        if (firstHeuristic) path = graph.GetPathAstar(srcObj, dstObj, null); // COMO SEGUNDO ARGUMENTO SE DEBERÍA PASAR LA HEURÍSTICA
-                        else path = graph.GetPathAstar(srcObj, dstObj, null); // COMO SEGUNDO ARGUMENTO SE DEBERÍA PASAR LA HEURÍSTICA
+                        path = graph.GetPathAstar(srcObj, dstObj, currentHeuristic); // COMO SEGUNDO ARGUMENTO SE DEBERÍA PASAR LA HEURÍSTICA
                         break;
                     default:
                     case TesterGraphAlgorithm.BFS:
@@ -220,9 +220,11 @@ namespace UCM.IAV.Navegacion
 
         public string ChangeHeuristic()
         {
-            // Está preparado para tener 2 heurísticas diferentes
-            firstHeuristic = !firstHeuristic;
-            return firstHeuristic ? "Primera" : "Segunda";
+            if (currentHeuristic == Heur.Euclidean)
+                currentHeuristic = Heur.Manhattan;
+            else
+                currentHeuristic = Heur.Euclidean;
+            return currentHeuristic == Heur.Euclidean ? "Euclidean" : "Manhattan";
         }
 
         public virtual void ResetPath()

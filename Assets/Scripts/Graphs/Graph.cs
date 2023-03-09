@@ -12,6 +12,12 @@ namespace UCM.IAV.Navegacion
     using UnityEngine;
     using System.Collections;
     using System.Collections.Generic;
+    using System;
+
+    public enum Heur
+    {
+        Euclidean, Manhattan
+    }
 
     /// <summary>
     /// Abstract class for graphs
@@ -25,9 +31,12 @@ namespace UCM.IAV.Navegacion
         protected bool[,] mapVertices;
         protected float[,] costsVertices;
         protected int numCols, numRows;
+        [SerializeField] LayerMask layerMask;
 
         // this is for informed search like A*
         public delegate float Heuristic(Vertex a, Vertex b);
+
+        
 
         // Used for getting path in frames
         public List<Vertex> path;
@@ -98,10 +107,74 @@ namespace UCM.IAV.Navegacion
             return new List<Vertex>();
         }
 
-        public List<Vertex> GetPathAstar(GameObject srcO, GameObject dstO, Heuristic h = null)
+        public List<Vertex> GetPathAstar(GameObject srcO, GameObject dstO, Heur h = Heur.Euclidean)
         {
-            // IMPLEMENTAR ALGORITMO A*
+            Vertex srcVertex = srcO.GetComponent<Vertex>();
+            Vertex dstVertex = dstO.GetComponent<Vertex>();
+
+            List<Vertex> openSet = new List<Vertex>();
+            HashSet<Vertex> closedSet = new HashSet<Vertex>();
+
+            openSet.Add(srcVertex);
+
+            while(openSet.Count > 0)
+            {
+                Vertex currentVertex = openSet[0];
+                for (int i = 1; i < openSet.Count; i++)
+                {
+                    if (openSet[i].cost < currentVertex.cost)
+                    {
+                        currentVertex = openSet[i];
+                    }
+                }
+
+                if (currentVertex == dstVertex)
+                {
+                    return BuildPath(currentVertex);
+                }
+
+                openSet.Remove(currentVertex);
+                closedSet.Add(currentVertex);
+
+                foreach(Vertex neighbor in GetNeighbours(currentVertex))
+                {
+                    if (closedSet.Contains(neighbor))
+                    {
+                        continue;
+                    }
+
+                    float gCostPrediction = currentVertex.gCost + Vector3.Distance(currentVertex.transform.position, neighbor.transform.position);
+
+                    if (!openSet.Contains(neighbor))
+                    {
+                        openSet.Add(neighbor);
+                    }
+                    else if (gCostPrediction >= neighbor.gCost)
+                    {
+                        continue;
+                    }
+
+                    neighbor.prevVert = currentVertex;
+                    neighbor.gCost = gCostPrediction;
+                    neighbor.hCost = GetDistance(neighbor.transform.position, dstVertex.transform.position, h);
+                    neighbor.cost = neighbor.gCost + neighbor.hCost;
+                }
+            }
             return new List<Vertex>();
+        }
+
+        private float GetDistance(Vector3 position1, Vector3 position2, Heur h)
+        {
+            if (h == Heur.Euclidean)
+            {
+                return new Vector3(position1.x - position2.x, position1.y - position2.y, position1.z - position2.z).magnitude;
+            }
+            else if (h == Heur.Manhattan)
+            {
+                return Math.Abs(position1.x - position2.x) + Math.Abs(position1.y - position2.y) + Math.Abs(position1.z - position2.z);
+            }
+            else
+                return 0;
         }
 
         public List<Vertex> Smooth(List<Vertex> inputPath)
@@ -114,19 +187,18 @@ namespace UCM.IAV.Navegacion
         }
 
         // Reconstruir el camino, dando la vuelta a la lista de nodos 'padres' /previos que hemos ido anotando
-        private List<Vertex> BuildPath(int srcId, int dstId, ref int[] prevList)
+        private List<Vertex> BuildPath(Vertex vertex)
         {
             List<Vertex> path = new List<Vertex>();
 
-            if (dstId < 0 || dstId >= vertices.Count) 
-                return path;
-
-            int prev = dstId;
-            do
+            while (vertex.prevVert != null)
             {
-                path.Add(vertices[prev]);
-                prev = prevList[prev];
-            } while (prev != srcId);
+                path.Add(vertex);
+                vertex = vertex.prevVert;
+            }
+
+            path.Reverse();
+
             return path;
         }
 

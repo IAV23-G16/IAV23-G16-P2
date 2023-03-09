@@ -19,11 +19,14 @@ namespace UCM.IAV.Navegacion
         /// Identificador del vértice 
         /// </summary>
         public int id;
+        public Vertex prevVert;
 
         /// <summary>
         /// Coste del vértice 
         /// </summary>
         public float cost;
+        public float gCost;
+        public float hCost;
 
         public int CompareTo(Vertex other)
         {
@@ -42,5 +45,6 @@ namespace UCM.IAV.Navegacion
             if (ReferenceEquals(obj, null)) return false;
             return (other.id == this.id);
         }
+
     }
 }
