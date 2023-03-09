@@ -15,13 +15,20 @@ namespace UCM.IAV.Navegacion
 {
     public class MinoEvader : MonoBehaviour
     {
+        [SerializeField] Merodear merodear;
+        [SerializeField] Llegada llegada;
+
         private void OnTriggerEnter(Collider other)
         {
             MinoCollision collision = other.gameObject.GetComponent<MinoCollision>();
-            if (!ReferenceEquals(collision, null))
+            if (collision != null)
             {
                 SeguirCamino follow = other.gameObject.GetComponent<SeguirCamino>();
                 if (follow != null) follow.ResetPath();
+
+                merodear.enabled = false;
+                llegada.enabled = true;
+                llegada.objetivo = other.gameObject;
             }
         }
     }

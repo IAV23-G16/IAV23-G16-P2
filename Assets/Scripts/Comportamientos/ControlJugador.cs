@@ -10,34 +10,59 @@ namespace UCM.IAV.Movimiento
 {
 
     using UnityEngine;
+    using UnityEngine.EventSystems;
 
     /// <summary>
     /// Clara para el comportamiento de agente que consiste en ser el jugador
     /// </summary>
     public class ControlJugador: ComportamientoAgente
     {
+        [SerializeField] Camera mainCam;
+        [SerializeField] float distanceWalkCloseLimit;
+        [SerializeField] LayerMask layerMask;
+        Vector3 targetPos;
+
+        private void Start()
+        {
+            targetPos = transform.position;
+        }
+
         /// <summary>
         /// Obtiene la dirección
         /// </summary>
         /// <returns></returns>
-        /// 
-
-        //float tiempoGiroSuave = 0.1f;
-        //float velocidadGiroSuave;
-
         public override Direccion GetDireccion()
         {
             Direccion direccion = new Direccion();
-            
-            //Direccion actual
-            direccion.lineal.x = Input.GetAxis("Horizontal");
-            direccion.lineal.z = Input.GetAxis("Vertical");
+
+            // Al pulsar ratón
+            if (Input.GetButton("WalkToPoint"))
+            {
+                // Si no pulsamos la UI
+                if (EventSystem.current.IsPointerOverGameObject()) return direccion;
+
+                // Pillamos el punto del suelo en el que pulsamos
+                Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                Physics.Raycast(ray, out hit, 100, layerMask);
+
+                targetPos = hit.point;
+            }
+
+            // Direccion actual
+            direccion.lineal.x = targetPos.x - transform.position.x;
+            direccion.lineal.z = targetPos.z - transform.position.z;
+
+            // Deadzone, para que no ande alante y atrás al llegar a su destino
+            if (Mathf.Abs(direccion.lineal.x) < distanceWalkCloseLimit && Mathf.Abs(direccion.lineal.z) < distanceWalkCloseLimit)
+            {
+                direccion.lineal.x = 0;
+                direccion.lineal.z = 0;
+            }
 
             //Resto de cálculo de movimiento
             direccion.lineal.Normalize();
             direccion.lineal *= agente.aceleracionMax;
-
-            // Podríamos meter una rotación automática en la dirección del movimiento, si quisiéramos
 
             return direccion;
         }

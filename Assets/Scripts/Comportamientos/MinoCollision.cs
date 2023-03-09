@@ -16,8 +16,11 @@ namespace UCM.IAV.Movimiento
     {
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.GetComponent<Teseo>() != null)
+            Teseo teseo = collision.gameObject.GetComponent<Teseo>();
+            if (teseo != null)
+            {
                 GameManager.instance.RestartScene();
+            }
         }
     }
 }

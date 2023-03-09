@@ -469,6 +469,9 @@ GameObject:
   - component: {fileID: 5856985828648263929}
   - component: {fileID: 4308355810874672084}
   - component: {fileID: 8357271194336293764}
+  - component: {fileID: -5385200870432825741}
+  - component: {fileID: -1019017908460025729}
+  - component: {fileID: -365576083434885861}
   m_Layer: 7
   m_Name: Minotaur
   m_TagString: Untagged
@@ -576,6 +579,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b3c1821a2a9e9042a9e648ea61af8f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-5385200870432825741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5856985828648263931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ffa41cffd326f64b856316d349eca5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  peso: 1
+  prioridad: 1
+  objetivo: {fileID: 0}
+  maxTime: 2
+  minTime: 1
+--- !u!114 &-1019017908460025729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5856985828648263931}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32ae6ecb59bfdb145aa73cf70a7145c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  peso: 1
+  prioridad: 1
+  objetivo: {fileID: 0}
+  radioObjetivo: 1
+  radioRalentizado: 5
+  fuerzaRalentizado: 1
+  avoidQuantity: 5
+  distance: 7
+--- !u!114 &-365576083434885861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5856985828648263931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13684ffe492191840b7059313990e5a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  merodear: {fileID: -5385200870432825741}
+  llegada: {fileID: -1019017908460025729}
 --- !u!1 &6227627562668922387
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,7 +812,6 @@ GameObject:
   - component: {fileID: 7448155279448101913}
   - component: {fileID: 6714168204369594045}
   - component: {fileID: 4847393998361609635}
-  - component: {fileID: 2088125191281208512}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -854,18 +907,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6e54cf6bb1548240949ba9d835d0b66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2088125191281208512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7872998543525572461}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13684ffe492191840b7059313990e5a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7873725490849595519
