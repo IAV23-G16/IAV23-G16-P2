@@ -56,32 +56,6 @@ Se incluyen los siguientes scripts/clases:
 
 Lo que vamos a realizar para resolver esta práctica es...
 
-El pseudocódigo del algoritmo de BFS (Breadth-First Search) utilizado es:
-```
-1  procedure BFS(G, root) is
- 2      let Q be a queue
- 3      label root as explored
- 4      Q.enqueue(root)
- 5      while Q is not empty do
- 6          v := Q.dequeue()
- 7          if v is the goal then
- 8              return v
- 9          for all edges from v to w in G.adjacentEdges(v) do
-10              if w is not labeled as explored then
-11                  label w as explored
-12                  w.parent := v
-13                  Q.enqueue(w)
-```
-
-El pseudocódigo del algoritmo de DFS (Depth-First Search) utilizado es:
-```
-procedure DFS(G, v) is
-    label v as discovered
-    for all directed edges from v to w that are in G.adjacentEdges(v) do
-        if vertex w is not labeled as discovered then
-            recursively call DFS(G, w)
-```
-
 El pseudocódigo del algoritmo de A* utilizado es:
 ```
 def pathfindAStar(graph, start, end, heuristic):
@@ -267,6 +241,20 @@ Se han realizado las siguientes ampliaciones
 
 Las tareas se han realizado y el esfuerzo ha sido repartido entre los autores.
 
+| Estado | Tarea | Fecha |
+| :----: | :---: | :---: |
+| ✔  | Característica A: Controles ratón | 02-03-2023 |
+| ✔  | Característica A: Cámara & UI | 02-03-2023 |
+| ✔  | ReadMe: Preparación | 02-03-2023 |
+| ✔  | ReadMe: Pseudocódigo y referencias | 02-03-2023 |
+| ✔  | ReadMe: Scripts | 03-03-2023 |
+| ✔  | Característica B: Merodeo y llegada minotauro | 09-03-2023 |
+| ✔  | Característica C: Algoritmo A* | 09-03-2023 |
+| ✔  | Característica D: Path Smoothing | 16-03-2023 |
+| ✔  | Característica E: Seguir Jugador | 16-03-2023 |
+| ✔  | Código: comentarios | 16-03-2023 |
+| ✔  | ReadMe: FIN | 16-03-2023 |
+| ✔  | Ejecutable y vídeo | 16-03-2023 |
 
 ## Referencias
 
@@ -275,5 +263,3 @@ Los recursos de terceros utilizados son de uso público.
 - *AI for Games*, Ian Millington.
     - 4.3.3 "A* Pseudo-code", 220.
     - 4.4.7 "Path Smoothing", 251.
-- [Breadth-first search](https://en.wikipedia.org/wiki/Breadth-first_search)
-- [Depth-first search](https://en.wikipedia.org/wiki/Depth-first_search)
