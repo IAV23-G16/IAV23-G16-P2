@@ -230,12 +230,14 @@ def smoothPath(inputPath):
 
 ## Pruebas y métricas
 
-- [Vídeo con la batería de pruebas]
+- [Vídeo con la batería de pruebas](https://youtu.be/NlvJ3kkxbFE)
 
 ## Ampliaciones
 
 Se han realizado las siguientes ampliaciones
 
+- Control del jugador por ratón haciendo uso de "raycast".
+- UI con datos variados como el número de baldosas que faltan por recorrer, o el tiempo.
 
 ## Producción
 
