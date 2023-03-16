@@ -5,6 +5,7 @@ using UnityEngine;
 public class ShowHideUI : MonoBehaviour
 {
     [SerializeField] GameObject[] uiGOs;
+    bool active = true;
 
     void Update()
     {
@@ -12,7 +13,10 @@ public class ShowHideUI : MonoBehaviour
         {
             foreach (GameObject go in uiGOs)
             {
-                go.SetActive(!go.active);
+                if (active)
+                    go.SetActive(!go.active);
+                else
+                    go.SetActive(go.active);
             }
         }
     }

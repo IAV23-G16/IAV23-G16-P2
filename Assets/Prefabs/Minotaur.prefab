@@ -472,7 +472,7 @@ GameObject:
   - component: {fileID: -5385200870432825741}
   - component: {fileID: -1019017908460025729}
   - component: {fileID: -365576083434885861}
-  - component: {fileID: -1089707544186982188}
+  - component: {fileID: 3247628937514102262}
   m_Layer: 7
   m_Name: Minotaur
   m_TagString: Untagged
@@ -604,7 +604,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5856985828648263931}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32ae6ecb59bfdb145aa73cf70a7145c7, type: 3}
   m_Name: 
@@ -613,10 +613,10 @@ MonoBehaviour:
   prioridad: 1
   objetivo: {fileID: 0}
   radioObjetivo: 1
-  radioRalentizado: 5
+  radioRalentizado: 15
   fuerzaRalentizado: 1
   avoidQuantity: 5
-  distance: 7
+  distance: 17
 --- !u!114 &-365576083434885861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -631,7 +631,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   merodear: {fileID: -5385200870432825741}
   llegada: {fileID: -1019017908460025729}
---- !u!114 &-1089707544186982188
+--- !u!114 &3247628937514102262
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -43,7 +43,7 @@ namespace UCM.IAV.Navegacion
         {
             GameObject minoGO = Instantiate(minotaur, graph.GetRandomPos().transform.position + new Vector3(0, 0.3f, 0), Quaternion.identity);
             minoGO.GetComponent<Merodear>().enabled = true;
-            minoGO.GetComponent<Llegada>().enabled = false;
+            minoGO.GetComponent<Llegada>().enabled = true;
         }
     }
 }

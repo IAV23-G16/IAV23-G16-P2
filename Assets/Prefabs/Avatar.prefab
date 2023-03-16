@@ -520,6 +520,11 @@ MonoBehaviour:
   peso: 1
   prioridad: 1
   objetivo: {fileID: 0}
+  mainCam: {fileID: 0}
+  distanceWalkCloseLimit: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &5688858013686503154
 GameObject:
   m_ObjectHideFlags: 0
