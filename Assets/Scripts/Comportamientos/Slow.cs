@@ -33,6 +33,10 @@ namespace UCM.IAV.Navegacion
                 vel = agent.velocidadMax;
                 agent.velocidadMax = 1;
             }
+            else if (other.GetComponent<Vertex>() != null)
+            {
+                other.GetComponent<Vertex>().cost += 4;
+            }
         }
 
         private void OnTriggerExit(Collider other)
@@ -42,6 +46,10 @@ namespace UCM.IAV.Navegacion
             {
                 Agente agent = other.gameObject.GetComponent<Agente>();
                 agent.velocidadMax = vel;
+            }
+            else if (other.GetComponent<Vertex>() != null)
+            {
+                other.GetComponent<Vertex>().cost -= 4;
             }
         }
     }

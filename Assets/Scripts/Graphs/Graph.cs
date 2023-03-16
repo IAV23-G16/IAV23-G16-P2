@@ -13,6 +13,7 @@ namespace UCM.IAV.Navegacion
     using System.Collections;
     using System.Collections.Generic;
     using System;
+    using TMPro;
 
     public enum Heur
     {
@@ -32,6 +33,9 @@ namespace UCM.IAV.Navegacion
         protected float[,] costsVertices;
         protected int numCols, numRows;
         [SerializeField] LayerMask layerMask;
+        [SerializeField] TextMeshProUGUI baldCaminoText;
+        [SerializeField] TextMeshProUGUI lengthCamino;
+        [SerializeField] TextMeshProUGUI costCamino;
 
         // this is for informed search like A*
         public delegate float Heuristic(Vertex a, Vertex b);
@@ -93,24 +97,11 @@ namespace UCM.IAV.Navegacion
             return costsV;
         }
 
-        // Encuentra caminos óptimos
-        public List<Vertex> GetPathBFS(GameObject srcO, GameObject dstO)
-        {
-            // IMPLEMENTAR ALGORITMO BFS
-            return new List<Vertex>();
-        }
-
-        // No encuentra caminos óptimos
-        public List<Vertex> GetPathDFS(GameObject srcO, GameObject dstO)
-        {
-            // IMPLEMENTAR ALGORITMO DFS
-            return new List<Vertex>();
-        }
-
         public List<Vertex> GetPathAstar(GameObject srcO, GameObject dstO, Heur h = Heur.Euclidean)
         {
-            Vertex srcVertex = srcO.GetComponent<Vertex>();
-            Vertex dstVertex = dstO.GetComponent<Vertex>();
+
+            Vertex srcVertex = this.GetNearestVertex(srcO.transform.position);
+            Vertex dstVertex = this.GetNearestVertex(dstO.transform.position);
 
             List<Vertex> openSet = new List<Vertex>();
             HashSet<Vertex> closedSet = new HashSet<Vertex>();
@@ -179,10 +170,33 @@ namespace UCM.IAV.Navegacion
 
         public List<Vertex> Smooth(List<Vertex> inputPath)
         {
-            // IMPLEMENTAR SUAVIZADO DE CAMINOS
+            if (inputPath.Count == 2)
+            {
+                lengthCamino.text = "2";
+                return inputPath;
+            }
 
             List<Vertex> outputPath = new List<Vertex>();
+            outputPath.Add(inputPath[0]);
 
+            int inputIndex = 2;
+            while (inputIndex < inputPath.Count - 1)
+            {
+                Vector3 dir = inputPath[inputIndex].transform.position - outputPath[outputPath.Count - 1].transform.position;
+                Vector3 startingPos = outputPath[outputPath.Count - 1].transform.position;
+                startingPos.y += 0.5f;
+
+                if (Physics.Raycast(startingPos, dir))
+                {
+                    outputPath.Add(inputPath[inputIndex - 1]);
+                }
+
+                inputIndex++;
+            }
+
+            outputPath.Add(inputPath[inputPath.Count - 1]);
+
+            lengthCamino.text = outputPath.Count.ToString();
             return outputPath; 
         }
 
@@ -190,15 +204,22 @@ namespace UCM.IAV.Navegacion
         private List<Vertex> BuildPath(Vertex vertex)
         {
             List<Vertex> path = new List<Vertex>();
+            float totalCost = 0;
 
             while (vertex.prevVert != null)
             {
                 path.Add(vertex);
-                vertex = vertex.prevVert;
+                totalCost += vertex.cost;
+                Vertex prev = vertex.prevVert;
+                vertex.prevVert = null;
+                vertex = prev;
+
             }
 
-            path.Reverse();
-
+            // path.Reverse();
+            baldCaminoText.text = path.Count.ToString();
+            lengthCamino.text = path.Count.ToString();
+            costCamino.text = totalCost.ToString();
             return path;
         }
 

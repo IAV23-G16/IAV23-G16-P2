@@ -27,6 +27,9 @@ namespace UCM.IAV.Navegacion
         protected Graph graph;
 
         [SerializeField]
+        protected Teseo theseus;
+
+        [SerializeField]
         private TesterGraphAlgorithm algorithm;
 
         [SerializeField]
@@ -76,7 +79,7 @@ namespace UCM.IAV.Navegacion
         // Update is called once per frame
         public virtual void Update()
         {
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKey(KeyCode.Mouse1))
             {
                 if (!ariadna)
                     updateAriadna(true);
@@ -102,14 +105,8 @@ namespace UCM.IAV.Navegacion
                 switch (algorithm)
                 {
                     case TesterGraphAlgorithm.ASTAR:
-                        path = graph.GetPathAstar(srcObj, dstObj, currentHeuristic); // COMO SEGUNDO ARGUMENTO SE DEBERÍA PASAR LA HEURÍSTICA
-                        break;
                     default:
-                    case TesterGraphAlgorithm.BFS:
-                        path = graph.GetPathBFS(srcObj, dstObj);
-                        break;
-                    case TesterGraphAlgorithm.DFS:
-                        path = graph.GetPathDFS(srcObj, dstObj);
+                        path = graph.GetPathAstar(srcObj, dstObj, currentHeuristic); // COMO SEGUNDO ARGUMENTO SE DEBERÍA PASAR LA HEURÍSTICA
                         break;
                 }
                 if (smoothPath)
@@ -117,7 +114,7 @@ namespace UCM.IAV.Navegacion
 
                 if (path.Count > 0)
                 {
-                    //GameManager.instance.SetPlayerNode(path[path.Count - 1].transform);
+                    // GameManager.instance.SetPlayerNode(path[path.Count - 1].transform);
 
                     DibujaHilo();
                 }
@@ -216,6 +213,7 @@ namespace UCM.IAV.Navegacion
         {
             ariadna = ar;
             hilo.enabled = ariadna;
+            theseus.GetComponent<SeguirCamino>().enabled = ariadna;
         }
 
         public string ChangeHeuristic()
